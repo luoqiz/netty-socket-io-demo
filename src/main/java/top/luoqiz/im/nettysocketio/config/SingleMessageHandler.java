@@ -33,8 +33,7 @@ public class SingleMessageHandler {
     @OnEvent(value = "SINGLE_CHAT")
     public void onSingleChat(SocketIOClient client, AckRequest request, MessageTemplate template) {
         singleMessageService.saveSingleMessage(template);
-        String sessionId = client.getHandshakeData().getSingleUrlParam("userId");
-        SocketIOClient toClient = socketConnection.getSocketIOClient(sessionId.toString());
+        SocketIOClient toClient = socketConnection.getSocketIOClient(template.getToUserId()+"");
         if (toClient != null) {
             toClient.sendEvent("SINGLE_CHAT", JSONUtil.toJsonStr(template));
         } else {
