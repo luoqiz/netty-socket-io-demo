@@ -10,6 +10,8 @@ import top.luoqiz.im.nettysocketio.model.MessageTemplate;
 import top.luoqiz.im.nettysocketio.service.SingleMessageService;
 
 import javax.annotation.Resource;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
@@ -31,14 +33,15 @@ public class SingleMessageHandler {
      * @param template 　客户端发送数据
      */
     @OnEvent(value = "SINGLE_CHAT")
-    public void onSingleChat(SocketIOClient client, AckRequest request, MessageTemplate template) {
-        singleMessageService.saveSingleMessage(template);
-        SocketIOClient toClient = socketConnection.getSocketIOClient(template.getToUserId()+"");
-        if (toClient != null) {
-            toClient.sendEvent("SINGLE_CHAT", JSONUtil.toJsonStr(template));
-        } else {
-            log.info("toClient not online!");
-        }
+    public void onSingleChat(SocketIOClient client, AckRequest request, Map<String, Object> template) {
+//        singleMessageService.saveSingleMessage(template);
+        log.info(JSONUtil.toJsonPrettyStr(template));
+//        SocketIOClient toClient = socketConnection.getSocketIOClient(template.get("toUserId").toString());
+//        if (toClient != null) {
+//            toClient.sendEvent("SINGLE_CHAT", JSONUtil.toJsonStr(template));
+//        } else {
+//            log.info("toClient not online!");
+//        }
     }
 
     /**

@@ -22,12 +22,13 @@ public class SocketConnection {
      */
     @OnConnect
     public void onConnect(SocketIOClient client) {
-        String sessionId = client.getHandshakeData().getSingleUrlParam("userId");
-        if (!StringUtils.isEmpty(sessionId)) {
-            // 存储 SocketIOClient，用于发送消息
-            socketIOClientMap.put(sessionId, client);
-            log.info("用户:" + sessionId + "已连接");
-        }
+        log.info("用户:" + client.getSessionId() + "已连接");
+//        String sessionId = client.getHandshakeData().getSingleUrlParam("userId");
+//        if (!StringUtils.isEmpty(sessionId)) {
+//            // 存储 SocketIOClient，用于发送消息
+//            socketIOClientMap.put(sessionId, client);
+//            log.info("用户:" + sessionId + "已连接");
+//        }
     }
 
     /**
@@ -37,11 +38,11 @@ public class SocketConnection {
      */
     @OnDisconnect
     public void onDisconnect(SocketIOClient client) {
-        String sessionId = client.getHandshakeData().getSingleUrlParam("userId");
-        if (!StringUtils.isEmpty(sessionId)) {
-            socketIOClientMap.remove(sessionId);
-            log.info("用户:" + sessionId + "断开连接");
-        }
+//        String sessionId = client.getHandshakeData().getSingleUrlParam("userId");
+//        if (!StringUtils.isEmpty(sessionId)) {
+//            socketIOClientMap.remove(sessionId);
+//            log.info("用户:" + sessionId + "断开连接");
+//        }
     }
 
     public SocketIOClient getSocketIOClient(String sessionId) {
