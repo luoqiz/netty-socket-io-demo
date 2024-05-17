@@ -5,7 +5,6 @@ import com.corundumstudio.socketio.annotation.OnConnect;
 import com.corundumstudio.socketio.annotation.OnDisconnect;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -38,6 +37,7 @@ public class SocketConnection {
      */
     @OnDisconnect
     public void onDisconnect(SocketIOClient client) {
+        log.info(client.getSessionId() + "   断开连接");
 //        String sessionId = client.getHandshakeData().getSingleUrlParam("userId");
 //        if (!StringUtils.isEmpty(sessionId)) {
 //            socketIOClientMap.remove(sessionId);

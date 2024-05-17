@@ -21,7 +21,7 @@ public class SocketIoConfiguration {
         com.corundumstudio.socketio.Configuration config =
                 new com.corundumstudio.socketio.Configuration();
         // 设置访问 host 地址
-//        config.setHostname("*");
+        config.setHostname("::0");
 
         // 设置端口
         config.setPort(9001);

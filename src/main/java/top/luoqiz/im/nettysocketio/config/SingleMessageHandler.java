@@ -1,5 +1,6 @@
 package top.luoqiz.im.nettysocketio.config;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.SocketIOClient;
@@ -10,8 +11,8 @@ import top.luoqiz.im.nettysocketio.model.MessageTemplate;
 import top.luoqiz.im.nettysocketio.service.SingleMessageService;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
@@ -32,16 +33,18 @@ public class SingleMessageHandler {
      * @param request  请求信息
      * @param template 　客户端发送数据
      */
-    @OnEvent(value = "SINGLE_CHAT")
+    @OnEvent(value = "MSG")
     public void onSingleChat(SocketIOClient client, AckRequest request, Map<String, Object> template) {
 //        singleMessageService.saveSingleMessage(template);
         log.info(JSONUtil.toJsonPrettyStr(template));
-//        SocketIOClient toClient = socketConnection.getSocketIOClient(template.get("toUserId").toString());
-//        if (toClient != null) {
-//            toClient.sendEvent("SINGLE_CHAT", JSONUtil.toJsonStr(template));
-//        } else {
-//            log.info("toClient not online!");
-//        }
+    }
+
+    @OnEvent(value = "PING")
+    public void ping(SocketIOClient client, AckRequest request, Map<String, Object> template) {
+        log.info(client.getSessionId() + "发送 ping 事件");
+        Map<String, Object> pong = new HashMap<>();
+        pong.put("type", "pong");
+        client.sendEvent("pong", JSONUtil.toJsonStr(pong));
     }
 
     /**
