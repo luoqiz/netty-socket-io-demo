@@ -44,7 +44,7 @@ public class SingleMessageHandler {
         log.info(client.getSessionId() + "发送 ping 事件");
         Map<String, Object> pong = new HashMap<>();
         pong.put("type", "pong");
-        client.sendEvent("pong", JSONUtil.toJsonStr(pong));
+        client.sendEvent("PONG", JSONUtil.toJsonStr(pong));
     }
 
     /**
